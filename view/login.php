@@ -2,55 +2,49 @@
 <html>
 <head>
 	<title>Login page</title>
+
+		<script>
+			
+			function validateLogin() {
+
+				var email = document.getElementById("email").value;
+				var password = document.getElementById("password").value;
+
+
+				if(email == "" || password== "") {
+
+					alert("all fields are required ");
+					return false;
+				}
+
+				return false;
+			}
+		</script>
+
+
+
+
 </head>
 
 	<body>
 			
 			<h1>Log in</h1>
 
-			<form method= "POST" action="">
-					<label for="name">Name</label>
-					<input type= "text" id="name" name= "name"><br>
+		<form action="../controllers/authController.php"method= "POST" >
+			<input type="hidden" name="action" value="login">
 
-					<label for="pass">Password</label>
-					<input type= "password" id="pass" name= "pass"><br>
+			<label for= "email"> Email: </label>
+			<input type = "email" name="email" id="email"> <br><br>
 
-					<input type= "submit" name= "submit">
+			<label for="password"> Password: </label>
+			<input type="password" name="password" id="password"><br><br>
 
-			</form>
-			<?php
+			<button type= "submit">Login</button>
 
-			if(isset($_POST['submit'])){
+		</form>
+		
 
-				if(!empty($_POST['name'] && ($_POST['pass']))){
-
-					echo "welcome "." ". $_POST['name']. "Login successful";
-				}
-
-				else if(empty($_POST['name'] || ($_POST['pass']))){
-
-					echo "Enter your name and pasword";
-				}
-				
-
-				else if(empty($_POST['name'])){
-
-					echo "ERROR: Enter your name ";
-				}
-				else if(empty($_POST['pass'])){
-
-					echo "ERROR: Enter your password ";
-				}
-
-				
-
-				
-			}	
-
-			
-
-
-			?>
+	<p> Don't have an account? <a href="register.php"> Register</a> </p>	
 
 
 	</body>
