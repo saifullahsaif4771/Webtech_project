@@ -1,6 +1,6 @@
 <?php
 
-        session_start()
+        session_start();
 
     if (!isset($_SESSION["email"])) {
 
@@ -26,4 +26,5 @@
 
 ?>
 
-<a href="logout.php">Logout</a>
+<a href="../controller/logout.php">Logout</a>
+

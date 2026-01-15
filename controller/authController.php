@@ -1,6 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
+session_start(); // start session
 
 // Prototype users
 $users = [
@@ -21,8 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach ($users as $user) {
             if ($user['email'] === $email && $user['password'] === $password) {
                 $found = true;
-                echo "Login successful! Role: " . $user['role'];
-                break;
+
+                // Save user info in session
+                $_SESSION['email'] = $user['email'];
+                $_SESSION['role'] = $user['role'];
+
+                // Redirect to dashboard
+                header("Location: ../view/dashboard.php");
+                exit();
             }
         }
 
