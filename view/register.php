@@ -26,7 +26,7 @@
 
 	<h1>Register</h1>
 
-		<form action= "../controllers/authController.php" method="POST" onsubmit="return validateRegister()">
+		<form action= "../controller/authController.php" method="POST" onsubmit="return validateRegister()">
 
 			 <input type="hidden" name="action" value="register">
 

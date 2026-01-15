@@ -1,59 +1,33 @@
 <?php
-session_start();
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
-// ---------- PROTOTYPE USERS ----------
+// Prototype users
 $users = [
     ["email" => "admin@test.com", "password" => "1234", "role" => "admin"],
     ["email" => "student@test.com", "password" => "1234", "role" => "student"]
 ];
 
-// ---------- FUTURE DATABASE CONNECTION ----------
-// include "../config/database.php";
-// SELECT * FROM users WHERE email = ?
+// Only handle POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if action is 'login'
+    if (isset($_POST['action']) && $_POST['action'] === 'login') {
 
-    // ---------- LOGIN ----------
-    if ($_POST["action"] == "login") {
+        $email = $_POST['email'] ?? '';
+        $password = $_POST['password'] ?? '';
 
-        $email = trim($_POST["email"]);
-        $password = trim($_POST["password"]);
-
-        if ($email == "" || $password == "") {
-            echo "All fields required";
-            exit; // stops execution
-        }
-
+        $found = false;
         foreach ($users as $user) {
-            if ($user["email"] == $email && $user["password"] == $password) {
-                $_SESSION["email"] = $user["email"];
-                $_SESSION["role"] = $user["role"];
-                header("Location: ../dashboard.php");
-                exit;
+            if ($user['email'] === $email && $user['password'] === $password) {
+                $found = true;
+                echo "Login successful! Role: " . $user['role'];
+                break;
             }
         }
 
-        echo "Invalid email or password";
-    }
-
-    // ---------- REGISTER ----------
-    if ($_POST["action"] == "register") {
-
-        $name = trim($_POST["name"]);
-        $email = trim($_POST["email"]);
-        $password = trim($_POST["password"]);
-        $role = $_POST["role"];
-
-        if ($name == "" || $email == "" || $password == "") {
-            die("All fields required");
+        if (!$found) {
+            echo "Invalid credentials";
         }
-
-        // ---------- PROTOTYPE REGISTER ----------
-        // Data is NOT saved permanently
-
-        // ---------- FUTURE DATABASE INSERT ----------
-        // INSERT INTO users (name, email, password, role) VALUES (...)
-
-        echo "Registration successful (Prototype)";
     }
 }
