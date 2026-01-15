@@ -30,7 +30,8 @@
 			
 			<h1>Log in</h1>
 
-		<form action="../controllers/authController.php"method= "POST" >
+
+		<form action="../controller/authController.php"method= "POST" >
 			<input type="hidden" name="action" value="login">
 
 			<label for= "email"> Email: </label>
