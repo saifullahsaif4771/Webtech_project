@@ -17,7 +17,7 @@
 					return false;
 				}
 
-				return false;
+				return true;
 			}
 		</script>
 
@@ -30,7 +30,10 @@
 			
 			<h1>Log in</h1>
 
-		<form action="../controller/authController.php"method= "POST" >
+
+
+		<form action="../controller/authController.php"method= "POST" novalidate onsubmit="return validateLogin();" >
+
 			<input type="hidden" name="action" value="login">
 
 			<label for= "email"> Email: </label>
