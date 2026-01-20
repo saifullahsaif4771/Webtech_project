@@ -26,5 +26,12 @@
 
 ?>
 
+<a href="change_password.php">
+    <button type="button">Change Password</button>
+</a>
+<br>
+
 <a href="../controller/logout.php">Logout</a>
+
+
 
