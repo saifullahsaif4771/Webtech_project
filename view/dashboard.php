@@ -19,7 +19,8 @@ if ($_SESSION["role"] === "admin") {
 } elseif ($_SESSION["role"] === "student") {
 
     echo "<p>Student Dashboard</p>";
-    echo '<a href="view_result.php"><button>View Result</button></a>';
+    echo '<a href="view_result.php"><button>View Result</button></a>'; 
+    echo '<a href="apply_course.php"><button>Apply for Course</button></a>';
 
 } else {
     echo "<p>No dashboard available</p>";

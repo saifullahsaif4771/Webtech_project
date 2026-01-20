@@ -8,6 +8,37 @@ include "../config/database.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+// ---------- APPLY FOR COURSE ----------
+if (isset($_POST['action']) && $_POST['action'] === 'apply_course') {
+
+    // Only students can apply
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'student') {
+        echo "<script>alert('Access denied!'); window.history.back();</script>";
+        exit;
+    }
+
+    $student_email = $_SESSION['email'];
+    $course = $_POST['course'] ?? '';
+
+    // Validate course
+    if (!in_array($course, ['Math', 'English', 'Bangla'])) {
+        echo "<script>alert('Invalid course selected!'); window.history.back();</script>";
+        exit;
+    }
+
+    // Update the user's selected course in DB
+    $stmt = mysqli_prepare($conn, "UPDATE users SET applied_course = ? WHERE email = ?");
+    mysqli_stmt_bind_param($stmt, "ss", $course, $student_email);
+    mysqli_stmt_execute($stmt);
+
+    echo "<script>alert('Course applied successfully!'); window.location.href='../view/dashboard.php';</script>";
+    exit;
+}
+
+
+
+
+
 
     // ---------- UPDATE SUBJECTS & MARKS ----------
 if (isset($_POST['action']) && $_POST['action'] === 'update_subjects_marks') {
