@@ -32,3 +32,7 @@ $user = mysqli_fetch_assoc($result);
 <a href="dashboard.php">
     <button>Back to Dashboard</button>
 </a>
+<br>
+<a href="view_result_pdf.php" target="_blank">
+    <button>Download PDF</button>
+</a>
