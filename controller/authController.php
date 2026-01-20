@@ -8,6 +8,35 @@ include "../config/database.php";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
+
+
+    // ---------- UPDATE SUBJECTS ----------
+if (isset($_POST['action']) && $_POST['action'] === 'update_subjects') {
+
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+        echo "Access denied!";
+        exit;
+    }
+
+    $subjects = $_POST['subject'] ?? [];
+
+    foreach ($subjects as $id => $subject) {
+        // Validate subject
+        if (!in_array($subject, ['Math', 'English', 'Bangla', ''])) {
+            continue;
+        }
+
+        $stmt = mysqli_prepare($conn, "UPDATE users SET subject = ? WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, "si", $subject, $id);
+        mysqli_stmt_execute($stmt);
+    }
+
+    echo "<script>alert('Subjects updated successfully!'); window.location.href='../view/user_management.php';</script>";
+    exit;
+}
+
+
+
     // ---------- ADD USER ----------
 if (isset($_POST['action']) && $_POST['action'] === 'add_user') {
 
