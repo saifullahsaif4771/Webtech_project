@@ -9,6 +9,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
+    // ---------- UPDATE SUBJECTS & MARKS ----------
+if (isset($_POST['action']) && $_POST['action'] === 'update_subjects_marks') {
+
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+        echo "Access denied!";
+        exit;
+    }
+
+    $subjects = $_POST['subject'] ?? [];
+    $marks = $_POST['marks'] ?? [];
+
+    foreach ($subjects as $id => $subject) {
+        $mark = $marks[$id] ?? NULL;
+
+        // Validate subject
+        if (!in_array($subject, ['Math', 'English', 'Bangla', ''])) {
+            continue;
+        }
+
+        // Validate marks
+        if ($mark !== NULL) {
+            $mark = (int)$mark;
+            if ($mark < 1 || $mark > 100) {
+                $mark = NULL;
+            }
+        }
+
+        $stmt = mysqli_prepare($conn, "UPDATE users SET subject = ?, marks = ? WHERE id = ?");
+        mysqli_stmt_bind_param($stmt, "sii", $subject, $mark, $id);
+        mysqli_stmt_execute($stmt);
+    }
+
+    echo "<script>alert('Subjects & Marks updated successfully!'); window.location.href='../view/user_management.php';</script>";
+    exit;
+}
+
+
+
+
 
     // ---------- UPDATE SUBJECTS ----------
 if (isset($_POST['action']) && $_POST['action'] === 'update_subjects') {

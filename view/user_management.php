@@ -31,7 +31,7 @@ include "../config/database.php";
 <hr>
 
 <!-- ---------- EXISTING USERS & ASSIGN SUBJECTS ---------- -->
-<h3>Existing Users - Assign Subjects</h3>
+<h3>Existing Users - Assign Subjects & Marks</h3>
 <form method="post" action="../controller/authController.php">
 <table border="1">
     <tr>
@@ -40,6 +40,7 @@ include "../config/database.php";
         <th>Email</th>
         <th>Role</th>
         <th>Subject</th>
+        <th>Marks</th>
         <th>Action</th>
     </tr>
 
@@ -48,6 +49,7 @@ include "../config/database.php";
     while ($row = mysqli_fetch_assoc($result)) {
         $id = $row['id'];
         $current_subject = $row['subject'] ?? '';
+        $current_marks = $row['marks'] ?? '';
         echo "<tr>
                 <td>{$id}</td>
                 <td>{$row['name']}</td>
@@ -62,6 +64,9 @@ include "../config/database.php";
                     </select>
                 </td>
                 <td>
+                    <input type='number' name='marks[{$id}]' value='{$current_marks}' min='1' max='100'>
+                </td>
+                <td>
                     <form style='display:inline;' method='post' action='../controller/authController.php'>
                         <input type='hidden' name='action' value='delete_user'>
                         <input type='hidden' name='id' value='{$id}'>
@@ -73,5 +78,5 @@ include "../config/database.php";
     ?>
 </table>
 <br>
-<button type="submit" name="action" value="update_subjects">Update Subjects</button>
+<button type="submit" name="action" value="update_subjects_marks">Update Subjects & Marks</button>
 </form>
