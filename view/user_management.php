@@ -80,3 +80,9 @@ include "../config/database.php";
 <br>
 <button type="submit" name="action" value="update_subjects_marks">Update Subjects & Marks</button>
 </form>
+
+<br><br>
+
+<a href="dashboard.php">
+    <button type="button">Back to Dashboard</button>
+</a>
