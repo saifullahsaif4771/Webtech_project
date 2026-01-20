@@ -6,12 +6,12 @@ if (!isset($_SESSION["email"]) || $_SESSION["role"] !== "admin") {
     exit;
 }
 
-// Include database connection
 include "../config/database.php";
 ?>
 
 <h2>User Management</h2>
 
+<!-- ---------- ADD USER ---------- -->
 <h3>Add User</h3>
 <form method="post" action="../controller/authController.php">
     <input type="hidden" name="action" value="add_user">
@@ -28,28 +28,43 @@ include "../config/database.php";
     <button type="submit">Add User</button>
 </form>
 
-<h3>Existing Users</h3>
+<hr>
+
+<!-- ---------- EXISTING USERS & ASSIGN SUBJECTS ---------- -->
+<h3>Existing Users - Assign Subjects</h3>
+<form method="post" action="../controller/authController.php">
 <table border="1">
     <tr>
         <th>ID</th>
         <th>Name</th>
         <th>Email</th>
         <th>Role</th>
+        <th>Subject</th>
         <th>Action</th>
     </tr>
 
     <?php
     $result = mysqli_query($conn, "SELECT * FROM users");
     while ($row = mysqli_fetch_assoc($result)) {
+        $id = $row['id'];
+        $current_subject = $row['subject'] ?? '';
         echo "<tr>
-                <td>{$row['id']}</td>
+                <td>{$id}</td>
                 <td>{$row['name']}</td>
                 <td>{$row['email']}</td>
                 <td>{$row['role']}</td>
                 <td>
+                    <select name='subject[{$id}]'>
+                        <option value=''>--Select--</option>
+                        <option value='Math' " . ($current_subject=='Math'?'selected':'') . ">Math</option>
+                        <option value='English' " . ($current_subject=='English'?'selected':'') . ">English</option>
+                        <option value='Bangla' " . ($current_subject=='Bangla'?'selected':'') . ">Bangla</option>
+                    </select>
+                </td>
+                <td>
                     <form style='display:inline;' method='post' action='../controller/authController.php'>
                         <input type='hidden' name='action' value='delete_user'>
-                        <input type='hidden' name='id' value='{$row['id']}'>
+                        <input type='hidden' name='id' value='{$id}'>
                         <button type='submit'>Delete</button>
                     </form>
                 </td>
@@ -57,3 +72,6 @@ include "../config/database.php";
     }
     ?>
 </table>
+<br>
+<button type="submit" name="action" value="update_subjects">Update Subjects</button>
+</form>
