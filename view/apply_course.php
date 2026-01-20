@@ -7,7 +7,7 @@ if (!isset($_SESSION['email']) || $_SESSION['role'] !== 'student') {
 ?>
 
 <h2>Apply for a Course</h2>
-<form method="post" action="../controller/authController.php">
+<form method="post" action="../controller/authController.php" novalidate>
     <input type="hidden" name="action" value="apply_course">
 
     <label>Select Course:</label>

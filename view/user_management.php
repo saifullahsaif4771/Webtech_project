@@ -13,7 +13,7 @@ include "../config/database.php";
 
 <!-- ---------- ADD USER ---------- -->
 <h3>Add User</h3>
-<form method="post" action="../controller/authController.php">
+<form method="post" action="../controller/authController.php" novalidate>
     <input type="hidden" name="action" value="add_user">
 
     Name: <input type="text" name="name"><br><br>
@@ -32,7 +32,7 @@ include "../config/database.php";
 
 <!-- ---------- EXISTING USERS & ASSIGN SUBJECTS ---------- -->
 <h3>Existing Users - Assign Subjects & Marks</h3>
-<form method="post" action="../controller/authController.php">
+<form method="post" action="../controller/authController.php" novalidate>
 <table border="1">
     <tr>
         <th>ID</th>

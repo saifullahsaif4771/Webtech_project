@@ -11,7 +11,7 @@ if (!isset($_SESSION["email"])) {
 <h2>Change Password</h2>
 
 <!-- Change Password Form -->
-<form method="post" action="../controller/authController.php">
+<form method="post" action="../controller/authController.php" novalidate>
     <input type="hidden" name="action" value="change_password">
 
     <label for="current_password">Current Password:</label><br>

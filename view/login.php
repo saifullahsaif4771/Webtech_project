@@ -31,7 +31,7 @@
 			<h1>Log in</h1>
 
 
-		<form action="../controller/authController.php"method= "POST" >
+		<form action="../controller/authController.php"method= "POST" novalidate>
 			<input type="hidden" name="action" value="login">
 
 			<label for= "email"> Email: </label>
