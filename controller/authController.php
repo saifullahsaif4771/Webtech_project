@@ -7,6 +7,70 @@ include "../config/database.php";
 // Only handle POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+
+    // ---------- ADD USER ----------
+if (isset($_POST['action']) && $_POST['action'] === 'add_user') {
+
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+        echo "Access denied!";
+        exit;
+    }
+
+    $name = trim($_POST['name']);
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
+    $role = $_POST['role'];
+
+    if ($name === "" || $email === "" || $password === "") {
+        echo "<script>alert('All fields required'); window.history.back();</script>";
+        exit;
+    }
+
+    // Check if email exists
+    $stmt_check = mysqli_prepare($conn, "SELECT * FROM users WHERE email = ?");
+    mysqli_stmt_bind_param($stmt_check, "s", $email);
+    mysqli_stmt_execute($stmt_check);
+    $result_check = mysqli_stmt_get_result($stmt_check);
+
+    if (mysqli_num_rows($result_check) > 0) {
+        echo "<script>alert('Email already exists'); window.history.back();</script>";
+        exit;
+    }
+
+    // Insert user
+    $stmt_insert = mysqli_prepare($conn, "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)");
+    mysqli_stmt_bind_param($stmt_insert, "ssss", $name, $email, $password, $role);
+    mysqli_stmt_execute($stmt_insert);
+
+    echo "<script>alert('User added successfully!'); window.location.href='../view/user_management.php';</script>";
+    exit;
+}
+
+// ---------- DELETE USER ----------
+if (isset($_POST['action']) && $_POST['action'] === 'delete_user') {
+
+    if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+        echo "Access denied!";
+        exit;
+    }
+
+    $id = $_POST['id'];
+
+    // Prevent admin from deleting themselves
+    if ($id == $_SESSION['id']) {
+        echo "<script>alert('You cannot delete yourself'); window.history.back();</script>";
+        exit;
+    }
+
+    $stmt_delete = mysqli_prepare($conn, "DELETE FROM users WHERE id = ?");
+    mysqli_stmt_bind_param($stmt_delete, "i", $id);
+    mysqli_stmt_execute($stmt_delete);
+
+    echo "<script>alert('User deleted successfully'); window.location.href='../view/user_management.php';</script>";
+    exit;
+}
+
+
     // ---------- LOGIN ----------
     if (isset($_POST['action']) && $_POST['action'] === 'login') {
 
