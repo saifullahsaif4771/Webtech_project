@@ -17,6 +17,7 @@
     if ($_SESSION["role"] == "admin") {
 
     echo "<p>Admin Dashboard</p>";
+    echo '<a href= "user_management.php"> <button>User Management </button> </a>';
 
     } else {
 
